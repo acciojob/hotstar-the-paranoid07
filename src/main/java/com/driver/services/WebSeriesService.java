@@ -47,11 +47,11 @@ public class WebSeriesService {
         productionHouse.setRatings(newRatings);
         productionHouse.getWebSeriesList().add(webSeries);
 
-        webSeriesRepository.save(webSeries);
+       WebSeries savedWebseries= webSeriesRepository.save(webSeries);
         productionHouseRepository.save(productionHouse);
 
 
-        return null;
+        return savedWebseries.getId();
     }
 
 }
