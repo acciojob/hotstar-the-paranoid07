@@ -58,17 +58,21 @@ public class SubscriptionService {
         //update the subscription in the repository
 
         User user=userRepository.findById(userId).get();
-        if(user.getSubscription().getSubscriptionType() == SubscriptionType.ELITE)
+
+        if(user.getSubscription().getSubscriptionType() == SubscriptionType.ELITE) {
             throw new Exception("Already the best Subscription");
+        }
 
         int priceDifferenceToBePaid=0;
 
         if(user.getSubscription().getSubscriptionType() == SubscriptionType.PRO){
             priceDifferenceToBePaid=1000+350*user.getSubscription().getNoOfScreensSubscribed()-
-                    800+250*user.getSubscription().getNoOfScreensSubscribed();
+                    user.getSubscription().getTotalAmountPaid();
+            user.getSubscription().setSubscriptionType(SubscriptionType.ELITE);
         } else if (user.getSubscription().getSubscriptionType() == SubscriptionType.BASIC) {
             priceDifferenceToBePaid=800+250*user.getSubscription().getNoOfScreensSubscribed()-
-                    500+200*user.getSubscription().getNoOfScreensSubscribed();
+                    user.getSubscription().getTotalAmountPaid();
+            user.getSubscription().setSubscriptionType(SubscriptionType.PRO);
         }
         return priceDifferenceToBePaid;
     }

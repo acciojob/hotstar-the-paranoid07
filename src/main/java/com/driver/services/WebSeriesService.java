@@ -28,12 +28,12 @@ public class WebSeriesService {
 //            throw new Exception("Production Id does not exist");
 //        }
 
-        ProductionHouse productionHouse=productionHouseRepository
-                .findById(webSeriesEntryDto.getProductionHouseId()).get();
-
         if(webSeriesRepository.findBySeriesName(webSeriesEntryDto.getSeriesName()) != null){
             throw new Exception("Series is already present");
         }
+
+        ProductionHouse productionHouse=productionHouseRepository
+                .findById(webSeriesEntryDto.getProductionHouseId()).get();
 
         WebSeries webSeries=new WebSeries();
         webSeries.setSeriesName(webSeriesEntryDto.getSeriesName());
@@ -47,7 +47,7 @@ public class WebSeriesService {
         productionHouse.setRatings(newRatings);
         productionHouse.getWebSeriesList().add(webSeries);
 
-
+        webSeriesRepository.save(webSeries);
         productionHouseRepository.save(productionHouse);
 
 
