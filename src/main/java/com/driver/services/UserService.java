@@ -31,9 +31,9 @@ public class UserService {
         user1.setMobNo(user.getMobNo());
         user1.setSubscription(user.getSubscription());
 
-        userRepository.save(user1);
+        User savedUser=userRepository.save(user1);
 
-        return user1.getId();
+        return savedUser.getId();
     }
 
     public Integer getAvailableCountOfWebSeriesViewable(Integer userId){
